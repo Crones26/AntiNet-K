@@ -6,7 +6,9 @@
 - Ручная проверка Google, Telegram, YouTube, Steam, Discord и ChatGPT напрямую или через VPN.
 - Сбор свежепроверенных рабочих серверов в избранное без дубликатов.
 
-[Скачать APK](https://github.com/Crones26/AntiNet-K/releases/download/v1.2.25.2803/AntiNet-K.apk) · [Релиз](https://github.com/Crones26/AntiNet-K/releases/tag/v1.2.25.2803)
+[Скачать APK](https://github.com/Crones26/AntiNet-K/releases/download/v1.2.25.2804/AntiNet-K.apk) · [Релиз](https://github.com/Crones26/AntiNet-K/releases/tag/v1.2.25.2804)
+
+Исправлен запрос системного разрешения VPN. При подключении подтвердите запрос Android.
 
 ARM32 и ARM64. Устанавливается отдельным приложением **AntiNet K**. Подписки импортируются по URL; закрытые коды провайдеров и их зашифрованные подписки недоступны. Обычный экран Karing открывается кнопкой вверху. Адрес сервиса меняется удержанием.
 

@@ -34,7 +34,7 @@ function manifest(bytes){
   for(const a of attributes(c)){
    const name=strings[c.readUInt32LE(a+4)],raw=c.readUInt32LE(a+8),value=raw===0xffffffff?null:strings[raw];
    if(tag==='manifest'&&name==='package')put(c,a,packageName);
-   if(tag==='manifest'&&name==='versionCode')c.writeUInt32LE(2803,a+16);
+   if(tag==='manifest'&&name==='versionCode')c.writeUInt32LE(2804,a+16);
    if(tag==='manifest'&&name==='versionName')put(c,a,'1.2.25');
    if(tag==='application'&&name==='label')put(c,a,isQa?'AntiNet K Test':'AntiNet K');
    if(name==='authorities'&&value?.startsWith('com.nebula.karing'))put(c,a,value.replace('com.nebula.karing',packageName));

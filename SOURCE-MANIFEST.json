@@ -1,6 +1,6 @@
 {
-  "version": "1.2.25.2803",
-  "compiledSourceSha256": "c45be85ca4efeec4c157f57474a17a5868199210c2150409208cca521ebc7b66",
+  "version": "1.2.25.2804",
+  "compiledSourceSha256": "f2265c3e3a52f3a51ed43ef5656c63c0c74934596694878330c4dd0f89ee88bd",
   "files": [
     {
       "path": ".gitignore",
@@ -12444,7 +12444,7 @@
     },
     {
       "path": "build-tools/package-android.mjs",
-      "sha256": "71a2aee82d59022a0cbed4262481a85288ba254214e30c2989b125b9dd89e828",
+      "sha256": "169b76e739ca7aad34f1828ca692e7481c3e438f77a24715f8738b9c484e5c19",
       "bytes": 6805
     },
     {
@@ -12634,7 +12634,7 @@
     },
     {
       "path": "lib/app/utils/app_utils.dart",
-      "sha256": "0439e18768fd1713f71fb3b88b0a6493c4aac1c5fa1b685a25be07613bdf1311",
+      "sha256": "5f22e43dec8ca4351476469a256f58b31426a35d2b9733bb5899e5db9055cbf6",
       "bytes": 1401
     },
     {
@@ -13829,7 +13829,7 @@
     },
     {
       "path": "PROVENANCE.json",
-      "sha256": "ee7a4570e5b02fd373936ea132a13609c5f643b8908bf1ac3c67285862f94628",
+      "sha256": "dc4e6e22a53415348f683354881f9a5647cdc3ff2c4c27b9ae53da6af61a42d5",
       "bytes": 648
     },
     {
@@ -13839,18 +13839,18 @@
     },
     {
       "path": "pubspec.yaml",
-      "sha256": "4ab4b2da9de1a3d6e96bc319a9621e026208a3b4de70f686f6b8dac8c6d3994b",
+      "sha256": "80b5450a9520edbc649a26c219bdb385faac1931feb6e2e2acad0c03eef6f34b",
       "bytes": 7232
     },
     {
       "path": "README.md",
-      "sha256": "cfe2b5d46003bdb16b184366b4334bec341236ec68258b766317227285a85fa3",
-      "bytes": 1540
+      "sha256": "b89052319d4816187b9747440756667bba6bd8c5bc17096ab7972d2e1e007dea",
+      "bytes": 1695
     },
     {
       "path": "test/android_restore_test.dart",
-      "sha256": "76af4c390a409c529f8469f6a243857783a70540b1007085aed9793495412cdc",
-      "bytes": 4160
+      "sha256": "4e5296b4cb814c0854ca6680eff0960b48dbe8b752c085dcdd92ef229c84b16b",
+      "bytes": 7106
     },
     {
       "path": "test/antinet_features_test.dart",
@@ -13869,8 +13869,8 @@
     },
     {
       "path": "third_party/vpn_service/lib/vpn_service.dart",
-      "sha256": "46b649fe35ab0b57ff039c13e94ab55adbdd44f2e3992c7cd696a7566731cb94",
-      "bytes": 6492
+      "sha256": "404a7df410e51fa8003d8e74f7a36889471f87c998fc6ec0dbb38740879af571",
+      "bytes": 6831
     },
     {
       "path": "third_party/vpn_service/lib/vpn_service_platform_interface.dart",

@@ -70,6 +70,12 @@ class FlutterVpnService {
           VpnServiceResultError('VPN configuration file is missing.'));
     }
     try {
+      // Native start/restart only check preparation; they never show Android's
+      // consent dialog. Await its actual Activity result before starting core.
+      final permissionError = await installService();
+      if (permissionError != null) {
+        return VpnServiceWaitResult(VpnServiceWaitType.error, permissionError);
+      }
       final error = await _methods.invokeMethod<String>(method, {
         'prepare': true,
         'configFilePath': _configPath,

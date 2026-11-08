@@ -37,9 +37,67 @@ void main() {
     expect((await FlutterVpnService.start(const Duration(seconds: 20))).type, VpnServiceWaitType.done);
     expect(calls.last.method, 'start');
     expect(calls.last.arguments, {'prepare': true, 'configFilePath': file.path, 'timeoutInSeconds': 20});
+    expect(calls.map((call) => call.method), ['install', 'start']);
     await FlutterVpnService.restart(const Duration(seconds: 25));
     expect(calls.last.method, 'restart');
     expect(calls.last.arguments['timeoutInSeconds'], 25);
+    expect(calls.map((call) => call.method), ['install', 'start', 'install', 'restart']);
+  });
+
+  test('Start waits for the actual Android permission result', () async {
+    final file = File('build/test-private/permission.json')..parent.createSync(recursive: true);
+    file.writeAsStringSync('{}');
+    addTearDown(file.deleteSync);
+    final consent = Completer<String?>();
+    final calls = <String>[];
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      calls.add(call.method);
+      if (call.method == 'install') return consent.future;
+      return null;
+    });
+    FlutterVpnService.prepareConfig(config: VpnServiceConfig(), tunnelServicePath: '', configFilePath: file.path);
+    final start = FlutterVpnService.start(const Duration(seconds: 20));
+    await Future<void>.delayed(Duration.zero);
+    expect(calls, ['install']);
+    consent.complete(null);
+    expect((await start).type, VpnServiceWaitType.done);
+    expect(calls, ['install', 'start']);
+  });
+
+  test('Denied permission never starts core; a later explicit attempt may retry', () async {
+    final file = File('build/test-private/denied.json')..parent.createSync(recursive: true);
+    file.writeAsStringSync('{}');
+    addTearDown(file.deleteSync);
+    var denied = true;
+    final calls = <String>[];
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      calls.add(call.method);
+      return call.method == 'install' && denied ? 'permission denied' : null;
+    });
+    FlutterVpnService.prepareConfig(config: VpnServiceConfig(), tunnelServicePath: '', configFilePath: file.path);
+    final rejected = await FlutterVpnService.start(const Duration(seconds: 20));
+    expect(rejected.type, VpnServiceWaitType.error);
+    expect(rejected.err?.message, 'permission denied');
+    expect(calls, ['install']);
+    denied = false;
+    expect((await FlutterVpnService.start(const Duration(seconds: 20))).type, VpnServiceWaitType.done);
+    expect(calls, ['install', 'install', 'start']);
+  });
+
+  test('Revoked restart permission and platform errors do not reach native restart', () async {
+    final file = File('build/test-private/revoked.json')..parent.createSync(recursive: true);
+    file.writeAsStringSync('{}');
+    addTearDown(file.deleteSync);
+    final calls = <String>[];
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      calls.add(call.method);
+      throw PlatformException(code: 'permission', message: 'VPN permission unavailable');
+    });
+    FlutterVpnService.prepareConfig(config: VpnServiceConfig(), tunnelServicePath: '', configFilePath: file.path);
+    final result = await FlutterVpnService.restart(const Duration(seconds: 20));
+    expect(result.type, VpnServiceWaitType.error);
+    expect(result.err?.message, 'VPN permission unavailable');
+    expect(calls, ['install']);
   });
 
   test('A native timeout remains a timeout and does not retry another route', () async {
@@ -47,7 +105,11 @@ void main() {
     file.writeAsStringSync('{}');
     addTearDown(file.deleteSync);
     var count = 0;
-    messenger.setMockMethodCallHandler(channel, (call) async { count++; return 'start: startService timeout'; });
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      if (call.method == 'install') return null;
+      count++;
+      return 'start: startService timeout';
+    });
     FlutterVpnService.prepareConfig(config: VpnServiceConfig(), tunnelServicePath: '', configFilePath: file.path);
     expect((await FlutterVpnService.start(const Duration(seconds: 1))).type, VpnServiceWaitType.timeout);
     expect(count, 1);
