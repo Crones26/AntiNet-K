@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {execFileSync} from 'node:child_process';
+const root=path.resolve(import.meta.dirname,'..');
+const hash=()=>execFileSync(process.execPath,[path.join(root,'build-tools/source-hash.mjs')],{encoding:'utf8'}).trim();
+const before=hash();
+const args=['--no-version-check','assemble','--output=build/android-local','--define=TargetPlatform=android','--define=AndroidArchs=android-arm android-arm64','--define=BuildMode=release','--define=TargetFile=lib/main.dart','--define=TreeShakeIcons=true','--define=DartObfuscation=false','--define=TrackWidgetCreation=false','android_aot_bundle_release_android-arm64','android_aot_bundle_release_android-arm'];
+if(process.platform==='win32')execFileSync('cmd.exe',['/d','/s','/c','flutter '+args.map(a=>'"'+a+'"').join(' ')],{cwd:root,stdio:'inherit'});else execFileSync('flutter',args,{cwd:root,stdio:'inherit'});
+const after=hash();
+if(before!==after)throw new Error('Sources changed during assembly');
+fs.writeFileSync(path.join(root,'build/android-local/source-build.json'),JSON.stringify({entry:'lib/main.dart',sourceSha256:after,upstream:'0c320dc182d095ec0d483f852169421e749c2bac',flutter:'3.44.9',dart:'3.12.2',architectures:'android-arm android-arm64',completed:new Date().toISOString()},null,2)+'\n');

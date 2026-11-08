@@ -1,0 +1,14 @@
+.dart_tool/
+build/
+.flutter-plugins*
+*.apk
+*.zip
+*.jks
+*.keystore
+*.p12
+*.pem
+.env*
+android/local.properties
+android/key.properties
+android/.gradle/
+android/.cxx/

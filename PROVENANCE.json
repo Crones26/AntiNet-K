@@ -1,0 +1,17 @@
+{
+  "version": "1.2.25.2803",
+  "package": "org.antinetmod.karing",
+  "apkSha256": "6bc5439d1be30d8483ea950888e50880f1cad2778aefe31dae17ba78b60c8267",
+  "sourceBuild": {
+    "entry": "lib/main.dart",
+    "sourceSha256": "c45be85ca4efeec4c157f57474a17a5868199210c2150409208cca521ebc7b66",
+    "architectures": "android-arm android-arm64",
+    "completed": "2026-11-08T11:25:20.1587751Z",
+    "flutter": "3.44.9",
+    "upstream": "0c320dc182d095ec0d483f852169421e749c2bac",
+    "dart": "3.12.2"
+  },
+  "originalCarrierSha256": "670595d787be699f960dd71e1a3eab55cdf1d4d17522851d793e49f1c6d09158",
+  "localSigner": true,
+  "autoUpdaterDisabled": true
+}

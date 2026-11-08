@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+const root=path.resolve(import.meta.dirname,'..'),dir=path.join(root,'build/carrier');
+const response=await fetch('https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_android_arm.apk');
+if(!response.ok)throw new Error('Carrier download failed: '+response.status);
+const bytes=Buffer.from(await response.arrayBuffer());
+if(crypto.createHash('sha256').update(bytes).digest('hex')!=='670595d787be699f960dd71e1a3eab55cdf1d4d17522851d793e49f1c6d09158')throw new Error('Carrier checksum mismatch');
+fs.mkdirSync(dir,{recursive:true});fs.writeFileSync(path.join(dir,'official-1.2.25.2802.apk'),bytes);
+console.log('Pinned official Android carrier saved.');
